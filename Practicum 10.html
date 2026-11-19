@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SupplySphere - DOM Elements</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f3;
+            margin: 0;
+            text-align: center;
+        }
+        header, footer {
+            background: #183b4e;
+            color: white;
+            padding: 12px;
+        }
+        .box {
+            background: white;
+            padding: 18px;
+            margin: 18px auto;
+            width: 80%;
+            max-width: 450px;
+            border-radius: 10px;
+        }
+        input, select {
+            padding: 9px;
+            margin: 8px;
+            width: 85%;
+        }
+        button {
+            padding: 9px 15px;
+            background: #28566b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #modal {
+            display: none;
+            background: #dce8ed;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SupplySphere</h1>
+    <p>Smart Supply Chain Management</p>
+</header>
+
+<div class="box">
+    <h3>Our Services</h3>
+    <select id="menu" onchange="showOption()">
+        <option value="">Select a service</option>
+        <option>Inventory Management</option>
+        <option>Shipment Tracking</option>
+        <option>Delivery Optimization</option>
+    </select>
+    <p id="menuResult"></p>
+</div>
+
+<div class="box">
+    <h2>Shipment Registration</h2>
+    <form id="shipmentForm" action="#">
+        <input type="text" id="name" placeholder="Customer Name">
+        <input type="text" id="sid" placeholder="Shipment ID">
+        <button type="submit">Register</button>
+    </form>
+    <p id="message"></p>
+</div>
+
+<div class="box">
+    <button onclick="openModal()">Our Mission</button>
+    <div id="modal">
+        <p>Improving transportation and delivery efficiency.</p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<div class="box">
+    <h3>Shipment Update Timer</h3>
+    <p id="timer">Waiting...</p>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+</div>
+
+<footer>
+    <p>© 2026 SupplySphere</p>
+</footer>
+
+<script>
+    function showOption() {
+        let choice = document.querySelector("#menu").value;
+        document.querySelector("#menuResult").innerHTML =
+            choice ? "Selected: " + choice : "";
+    }
+
+    document.querySelector("#shipmentForm").onsubmit = function(e) {
+        e.preventDefault();
+        let name = document.querySelector("#name").value;
+        let sid = document.querySelector("#sid").value;
+
+        document.querySelector("#message").innerHTML =
+            name.trim() && sid.trim()
+            ? "Shipment registered successfully!"
+            : "Please fill all fields!";
+    };
+
+    function openModal() {
+        document.querySelector("#modal").style.display = "block";
+    }
+    function closeModal() {
+        document.querySelector("#modal").style.display = "none";
+    }
+
+    let timeout, interval;
+
+    function startTimer() {
+        clearTimeout(timeout);
+        clearInterval(interval);
+
+        document.querySelector("#timer").innerHTML = "Updating...";
+
+        timeout = setTimeout(() => {
+            document.querySelector("#timer").innerHTML = "Update Started!";
+        }, 2000);
+
+        interval = setInterval(() => {
+            document.querySelector("#timer").innerHTML = "Shipment status checked!";
+        }, 4000);
+    }
+
+    function stopTimer() {
+        clearTimeout(timeout);
+        clearInterval(interval);
+        document.querySelector("#timer").innerHTML = "Timer Stopped";
+    }
+</script>
+</body>
+</html>
